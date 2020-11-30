@@ -43,6 +43,7 @@ namespace Arbres
             this.BtValideChoix = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.BtParcoursEnLargeur = new System.Windows.Forms.Button();
+            this.btPrefixé = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +81,7 @@ namespace Arbres
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(164, 22);
             this.textBox1.TabIndex = 3;
+            this.textBox1.Visible = false;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             this.textBox1.Validating += new System.ComponentModel.CancelEventHandler(this.textBox1_Validating);
@@ -178,17 +180,28 @@ namespace Arbres
             // 
             this.BtParcoursEnLargeur.Location = new System.Drawing.Point(764, 12);
             this.BtParcoursEnLargeur.Name = "BtParcoursEnLargeur";
-            this.BtParcoursEnLargeur.Size = new System.Drawing.Size(259, 23);
+            this.BtParcoursEnLargeur.Size = new System.Drawing.Size(259, 37);
             this.BtParcoursEnLargeur.TabIndex = 9;
             this.BtParcoursEnLargeur.Text = "Parcours en largeur";
             this.BtParcoursEnLargeur.UseVisualStyleBackColor = true;
             this.BtParcoursEnLargeur.Click += new System.EventHandler(this.BtParcoursEnLargeur_Click);
+            // 
+            // btPrefixé
+            // 
+            this.btPrefixé.Location = new System.Drawing.Point(764, 55);
+            this.btPrefixé.Name = "btPrefixé";
+            this.btPrefixé.Size = new System.Drawing.Size(259, 34);
+            this.btPrefixé.TabIndex = 10;
+            this.btPrefixé.Text = "Parcours en profondeur préfixé";
+            this.btPrefixé.UseVisualStyleBackColor = true;
+            this.btPrefixé.Click += new System.EventHandler(this.btPrefixé_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 556);
+            this.Controls.Add(this.btPrefixé);
             this.Controls.Add(this.BtParcoursEnLargeur);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.panel1);
@@ -224,6 +237,7 @@ namespace Arbres
         private System.Windows.Forms.RadioButton RbbNG;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button BtParcoursEnLargeur;
+        private System.Windows.Forms.Button btPrefixé;
     }
 }
 

@@ -27,6 +27,7 @@ namespace Arbres
             {
                 Arbre[i] = -1;
             }
+            textBox1.Visible = true;
             label2.Text = "Racine? (entier)";
             this.button1.Visible = false;
         }
@@ -100,6 +101,43 @@ namespace Arbres
                 if (a!=-1) { textBox2.Text = textBox2.Text + a.ToString() + " => ";  }
                 if (b != -1) { textBox2.Text = textBox2.Text + b.ToString() + " => " ; }
             }
+        }
+
+       
+        
+        private void btPrefixé_Click(object sender, EventArgs e)
+        {
+            // Parcours de l'arbre en profondeur préfixé.
+            // cherche Noeud inf gauche tant que pas noeud différent de feuille (-1) ou profondeur Max atteinte
+            // si c'est le cas remonter d'un cran et chercher Noeud droit et reprendre
+            // condition d'arret= il n'y  a plus de noeud droit (-1) ou dernier case du tableau atteinte.
+            int Nivo = 0;
+            int a = 0;
+            int  b=0;
+            textBox2.Text = Arbre[0].ToString()+ "=> ";
+            // départ de boucle
+            do
+            {
+                 a = Arbre[2 * Nivo + 1];
+                if (a != -1 || Nivo >= 5) // NG existe
+                {
+                    textBox2.Text = textBox2.Text + a.ToString() + " -> ";
+                    Nivo++;
+                }
+                else // NG n'existe pas
+                {
+                     b = Arbre[2 * Nivo + 2];
+                    if (b!= -1 || Nivo >= 5) // ND existe
+                    {
+                        textBox2.Text = textBox2.Text + b.ToString() + " --> ";
+                    }
+                    else
+                    {// ND n'existe pas
+                        Nivo=Nivo-2;
+                    }
+                }
+            } while ( b !=-1 && Nivo<5);
+
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
