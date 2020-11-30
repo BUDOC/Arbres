@@ -36,6 +36,12 @@ namespace Arbres
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.tbChoixNoeud = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.RbbNG = new System.Windows.Forms.RadioButton();
+            this.RbND = new System.Windows.Forms.RadioButton();
+            this.RBAnnuler = new System.Windows.Forms.RadioButton();
+            this.BtValideChoix = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -104,11 +110,66 @@ namespace Arbres
             this.tbChoixNoeud.Size = new System.Drawing.Size(121, 22);
             this.tbChoixNoeud.TabIndex = 6;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.BtValideChoix);
+            this.panel1.Controls.Add(this.RBAnnuler);
+            this.panel1.Controls.Add(this.RbND);
+            this.panel1.Controls.Add(this.RbbNG);
+            this.panel1.Location = new System.Drawing.Point(38, 207);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(312, 259);
+            this.panel1.TabIndex = 7;
+            this.panel1.Visible = false;
+            // 
+            // RbbNG
+            // 
+            this.RbbNG.AutoSize = true;
+            this.RbbNG.Location = new System.Drawing.Point(60, 53);
+            this.RbbNG.Name = "RbbNG";
+            this.RbbNG.Size = new System.Drawing.Size(218, 21);
+            this.RbbNG.TabIndex = 0;
+            this.RbbNG.Text = "Changer NG (Noeud Gauche)";
+            this.RbbNG.UseVisualStyleBackColor = true;
+            // 
+            // RbND
+            // 
+            this.RbND.AutoSize = true;
+            this.RbND.Location = new System.Drawing.Point(60, 91);
+            this.RbND.Name = "RbND";
+            this.RbND.Size = new System.Drawing.Size(197, 21);
+            this.RbND.TabIndex = 1;
+            this.RbND.Text = "Changer ND (Noeud Droit)";
+            this.RbND.UseVisualStyleBackColor = true;
+            // 
+            // RBAnnuler
+            // 
+            this.RBAnnuler.AutoSize = true;
+            this.RBAnnuler.Checked = true;
+            this.RBAnnuler.Location = new System.Drawing.Point(60, 132);
+            this.RBAnnuler.Name = "RBAnnuler";
+            this.RBAnnuler.Size = new System.Drawing.Size(78, 21);
+            this.RBAnnuler.TabIndex = 2;
+            this.RBAnnuler.TabStop = true;
+            this.RBAnnuler.Text = "Annuler";
+            this.RBAnnuler.UseVisualStyleBackColor = true;
+            // 
+            // BtValideChoix
+            // 
+            this.BtValideChoix.Location = new System.Drawing.Point(60, 176);
+            this.BtValideChoix.Name = "BtValideChoix";
+            this.BtValideChoix.Size = new System.Drawing.Size(197, 23);
+            this.BtValideChoix.TabIndex = 3;
+            this.BtValideChoix.Text = "Valider le choix";
+            this.BtValideChoix.UseVisualStyleBackColor = true;
+            this.BtValideChoix.Click += new System.EventHandler(this.BtValideChoix_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 556);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbChoixNoeud);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox1);
@@ -118,6 +179,8 @@ namespace Arbres
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,6 +195,11 @@ namespace Arbres
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.TextBox tbChoixNoeud;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button BtValideChoix;
+        private System.Windows.Forms.RadioButton RBAnnuler;
+        private System.Windows.Forms.RadioButton RbND;
+        private System.Windows.Forms.RadioButton RbbNG;
     }
 }
 
