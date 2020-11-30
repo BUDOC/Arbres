@@ -88,6 +88,20 @@ namespace Arbres
             panel1.Visible = false;
         }
 
+        private void BtParcoursEnLargeur_Click(object sender, EventArgs e)
+        {
+            int a, b;
+            textBox2.Text = "";
+            if (Arbre[0]!=-1) { textBox2.Text = Arbre[0].ToString() + " => "; }
+            for (int i=0;i<=5;i++)
+            {
+                a = Arbre[2 * i + 1];
+                b= Arbre[2 * i + 2];
+                if (a!=-1) { textBox2.Text = textBox2.Text + a.ToString() + " => ";  }
+                if (b != -1) { textBox2.Text = textBox2.Text + b.ToString() + " => " ; }
+            }
+        }
+
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
        {
             if(e.KeyCode==Keys.Enter)  // si le contenu du texbox est validé par ENTER
@@ -119,7 +133,7 @@ namespace Arbres
                     if (Arbre[2 * k + 1] == -1) 
                     { Arbre[2 * k + 1] = ValeurDuNoeud; }// Création du noeud gauche
                     else
-                    {if (Arbre[2 * k + +2]==-1)
+                    {if (Arbre[2 * k +2]==-1)
                         { Arbre[2 * k + 2] = ValeurDuNoeud; }// Création du noeud droit
                     // cas ou les deux noeuds existent
                         else // les 2 fils existent

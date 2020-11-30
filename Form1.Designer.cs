@@ -41,6 +41,8 @@ namespace Arbres
             this.RbND = new System.Windows.Forms.RadioButton();
             this.RBAnnuler = new System.Windows.Forms.RadioButton();
             this.BtValideChoix = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.BtParcoursEnLargeur = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -164,11 +166,31 @@ namespace Arbres
             this.BtValideChoix.UseVisualStyleBackColor = true;
             this.BtValideChoix.Click += new System.EventHandler(this.BtValideChoix_Click);
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(764, 169);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(259, 276);
+            this.textBox2.TabIndex = 8;
+            // 
+            // BtParcoursEnLargeur
+            // 
+            this.BtParcoursEnLargeur.Location = new System.Drawing.Point(764, 12);
+            this.BtParcoursEnLargeur.Name = "BtParcoursEnLargeur";
+            this.BtParcoursEnLargeur.Size = new System.Drawing.Size(259, 23);
+            this.BtParcoursEnLargeur.TabIndex = 9;
+            this.BtParcoursEnLargeur.Text = "Parcours en largeur";
+            this.BtParcoursEnLargeur.UseVisualStyleBackColor = true;
+            this.BtParcoursEnLargeur.Click += new System.EventHandler(this.BtParcoursEnLargeur_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 556);
+            this.ClientSize = new System.Drawing.Size(1095, 556);
+            this.Controls.Add(this.BtParcoursEnLargeur);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbChoixNoeud);
             this.Controls.Add(this.listBox2);
@@ -200,6 +222,8 @@ namespace Arbres
         private System.Windows.Forms.RadioButton RBAnnuler;
         private System.Windows.Forms.RadioButton RbND;
         private System.Windows.Forms.RadioButton RbbNG;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button BtParcoursEnLargeur;
     }
 }
 
