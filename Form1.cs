@@ -103,41 +103,67 @@ namespace Arbres
             }
         }
 
-       
-        
-        private void btPrefixé_Click(object sender, EventArgs e)
+        private void Explore()
         {
             // Parcours de l'arbre en profondeur préfixé.
-            // cherche Noeud inf gauche tant que pas noeud différent de feuille (-1) ou profondeur Max atteinte
-            // si c'est le cas remonter d'un cran et chercher Noeud droit et reprendre
-            // condition d'arret= il n'y  a plus de noeud droit (-1) ou dernier case du tableau atteinte.
+            // Utilisation d'une pile. Elles contient les noeuds visités
+            // Reset pile
+            // de la racine
+            // Empiler Noeud racine (afficher dans le compte rendu du chemin)
+            // 1 -cherche Noeud inf gauche tant que pas noeud différent de feuille (-1) ou profondeur Max atteinte
+            // SI le NG existe alors empiler le noeud et reprendre à 1 (ajouter dans le compte rendu du chemin)
+            // SINON  CHercher le fils droit 
+            //   s'il existe Empiler fils droit pui reprendre en 1 (ajouter dans le compte rendu du chemin)
+            // Sinon (-1 ou niveau max) Dépiler            
+            // condition d'arret= il n'y  a plus de noeud droit (-1) .    
+            //========================================================================
+            textBox2.Text = Arbre[0].ToString() + "=> ";
+            List<int> Pile = new List<int>();
             int Nivo = 0;
             int a = 0;
-            int  b=0;
-            textBox2.Text = Arbre[0].ToString()+ "=> ";
-            // départ de boucle
-            do
+            int b = 0;
+            int pos = 0;
+            Pile.Add(0);
+            textBox2.Text = Arbre[0].ToString() + "=> ";
             {
-                 a = Arbre[2 * Nivo + 1];
-                if (a != -1 || Nivo >= 5) // NG existe
+                bool fin = false;
+                do
                 {
-                    textBox2.Text = textBox2.Text + a.ToString() + " -> ";
-                    Nivo++;
-                }
-                else // NG n'existe pas
-                {
-                     b = Arbre[2 * Nivo + 2];
-                    if (b!= -1 || Nivo >= 5) // ND existe
+                    MessageBox.Show("passage dans boucle Explore"); 
+                    pos = 2 * Nivo + 1;
+                    a = Arbre[pos];
+                    if (a != -1 && Nivo <= 5) //Fils G existe
                     {
-                        textBox2.Text = textBox2.Text + b.ToString() + " --> ";
+                        Pile.Add(pos); //Empile
+                        textBox2.Text = textBox2.Text +a.ToString() + "=> ";
+                        Nivo++;
                     }
                     else
-                    {// ND n'existe pas
-                        Nivo=Nivo-2;
+                    {
+                        pos = 2 * Nivo + 2;
+                        a = Arbre[pos];
+                        if (a != -1 && Nivo <= 5) // Fils droit existe
+                        {
+                            Pile.Add(pos);//Empile
+                            textBox2.Text = textBox2.Text + a.ToString() + "=> ";
+                            Nivo++;
+                        }
+                        else
+                        {// fils droit n'existe pas
+                            b = Pile.Count-1;
+                            if (b < 0 || Nivo > 5) { fin = true; } // condition de fin
+                            // depile
+                            Pile.RemoveAt(b);
+                            Nivo--;
+                        }
                     }
-                }
-            } while ( b !=-1 && Nivo<5);
+                } while (!fin);
 
+            }
+        }
+        private void btPrefixé_Click(object sender, EventArgs e)
+        {
+            Explore();
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
