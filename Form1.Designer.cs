@@ -37,13 +37,15 @@ namespace Arbres
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.tbChoixNoeud = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.RbbNG = new System.Windows.Forms.RadioButton();
-            this.RbND = new System.Windows.Forms.RadioButton();
-            this.RBAnnuler = new System.Windows.Forms.RadioButton();
             this.BtValideChoix = new System.Windows.Forms.Button();
+            this.RBAnnuler = new System.Windows.Forms.RadioButton();
+            this.RbND = new System.Windows.Forms.RadioButton();
+            this.RbbNG = new System.Windows.Forms.RadioButton();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.BtParcoursEnLargeur = new System.Windows.Forms.Button();
             this.btPrefixé = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,25 +128,15 @@ namespace Arbres
             this.panel1.TabIndex = 7;
             this.panel1.Visible = false;
             // 
-            // RbbNG
+            // BtValideChoix
             // 
-            this.RbbNG.AutoSize = true;
-            this.RbbNG.Location = new System.Drawing.Point(60, 53);
-            this.RbbNG.Name = "RbbNG";
-            this.RbbNG.Size = new System.Drawing.Size(218, 21);
-            this.RbbNG.TabIndex = 0;
-            this.RbbNG.Text = "Changer NG (Noeud Gauche)";
-            this.RbbNG.UseVisualStyleBackColor = true;
-            // 
-            // RbND
-            // 
-            this.RbND.AutoSize = true;
-            this.RbND.Location = new System.Drawing.Point(60, 91);
-            this.RbND.Name = "RbND";
-            this.RbND.Size = new System.Drawing.Size(197, 21);
-            this.RbND.TabIndex = 1;
-            this.RbND.Text = "Changer ND (Noeud Droit)";
-            this.RbND.UseVisualStyleBackColor = true;
+            this.BtValideChoix.Location = new System.Drawing.Point(60, 176);
+            this.BtValideChoix.Name = "BtValideChoix";
+            this.BtValideChoix.Size = new System.Drawing.Size(197, 23);
+            this.BtValideChoix.TabIndex = 3;
+            this.BtValideChoix.Text = "Valider le choix";
+            this.BtValideChoix.UseVisualStyleBackColor = true;
+            this.BtValideChoix.Click += new System.EventHandler(this.BtValideChoix_Click);
             // 
             // RBAnnuler
             // 
@@ -158,15 +150,25 @@ namespace Arbres
             this.RBAnnuler.Text = "Annuler";
             this.RBAnnuler.UseVisualStyleBackColor = true;
             // 
-            // BtValideChoix
+            // RbND
             // 
-            this.BtValideChoix.Location = new System.Drawing.Point(60, 176);
-            this.BtValideChoix.Name = "BtValideChoix";
-            this.BtValideChoix.Size = new System.Drawing.Size(197, 23);
-            this.BtValideChoix.TabIndex = 3;
-            this.BtValideChoix.Text = "Valider le choix";
-            this.BtValideChoix.UseVisualStyleBackColor = true;
-            this.BtValideChoix.Click += new System.EventHandler(this.BtValideChoix_Click);
+            this.RbND.AutoSize = true;
+            this.RbND.Location = new System.Drawing.Point(60, 91);
+            this.RbND.Name = "RbND";
+            this.RbND.Size = new System.Drawing.Size(197, 21);
+            this.RbND.TabIndex = 1;
+            this.RbND.Text = "Changer ND (Noeud Droit)";
+            this.RbND.UseVisualStyleBackColor = true;
+            // 
+            // RbbNG
+            // 
+            this.RbbNG.AutoSize = true;
+            this.RbbNG.Location = new System.Drawing.Point(60, 53);
+            this.RbbNG.Name = "RbbNG";
+            this.RbbNG.Size = new System.Drawing.Size(218, 21);
+            this.RbbNG.TabIndex = 0;
+            this.RbbNG.Text = "Changer NG (Noeud Gauche)";
+            this.RbbNG.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
@@ -196,11 +198,32 @@ namespace Arbres
             this.btPrefixé.UseVisualStyleBackColor = true;
             this.btPrefixé.Click += new System.EventHandler(this.btPrefixé_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(696, 116);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(764, 452);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(259, 39);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Chargement d\'un arbre test";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 556);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.btPrefixé);
             this.Controls.Add(this.BtParcoursEnLargeur);
             this.Controls.Add(this.textBox2);
@@ -238,6 +261,8 @@ namespace Arbres
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button BtParcoursEnLargeur;
         private System.Windows.Forms.Button btPrefixé;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -103,7 +103,7 @@ namespace Arbres
             }
         }
 
-        private void Explore()
+        private void Explore(bool cote)
         {
             // Parcours de l'arbre en profondeur préfixé.
             // Utilisation d'une pile. Elles contient les noeuds visités
@@ -116,54 +116,66 @@ namespace Arbres
             //   s'il existe Empiler fils droit pui reprendre en 1 (ajouter dans le compte rendu du chemin)
             // Sinon (-1 ou niveau max) Dépiler            
             // condition d'arret= il n'y  a plus de noeud droit (-1) .    
-            //========================================================================
-            textBox2.Text = Arbre[0].ToString() + "=> ";
-            List<int> Pile = new List<int>();
-            int Nivo = 0;
-            int a = 0;
-            int b = 0;
-            int pos = 0;
-            Pile.Add(0);
-            textBox2.Text = Arbre[0].ToString() + "=> ";
-            {
+            //========================================================================                      
+                    
                 bool fin = false;
-                do
-                {
+                bool exploreAgauche = cote;
+               
                     MessageBox.Show("passage dans boucle Explore"); 
                     pos = 2 * Nivo + 1;
                     a = Arbre[pos];
-                    if (a != -1 && Nivo <= 5) //Fils G existe
+                    if (a != -1 && Nivo <= 5 && exploreAgauche) //Fils G existe
                     {
                         Pile.Add(pos); //Empile
                         textBox2.Text = textBox2.Text +a.ToString() + "=> ";
                         Nivo++;
-                    }
+                         exploreAgauche = true;
+            }
                     else
                     {
                         pos = 2 * Nivo + 2;
                         a = Arbre[pos];
-                        if (a != -1 && Nivo <= 5) // Fils droit existe
+                        if (a != -1 && Nivo <= 5) // Fils droit existe Mais pas fils gauche
                         {
                             Pile.Add(pos);//Empile
                             textBox2.Text = textBox2.Text + a.ToString() + "=> ";
-                            Nivo++;
+                         exploreAgauche = false;
+                        Nivo++;
                         }
                         else
-                        {// fils droit n'existe pas
+                        {// Aucun fils
                             b = Pile.Count-1;
                             if (b < 0 || Nivo > 5) { fin = true; } // condition de fin
                             // depile
                             Pile.RemoveAt(b);
-                            Nivo--;
+                            exploreAgauche = false;
+                            Nivo=Nivo-2;
                         }
                     }
-                } while (!fin);
-
-            }
+                Explore(exploreAgauche);                           
         }
+
+        List<int> Pile = new List<int>();
+        int Nivo = 0;
+        int a = 0;
+        int b = 0;
+        int pos = 0;
+       
+
         private void btPrefixé_Click(object sender, EventArgs e)
         {
-            Explore();
+            Pile.Add(0);
+            textBox2.Text = Arbre[0].ToString() + "=> ";
+            Explore(true);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 33; i++)
+            {
+                Arbre[i]=i+100;
+                AfficheTablo();
+            }
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
