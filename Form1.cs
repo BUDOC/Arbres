@@ -17,13 +17,13 @@ namespace Arbres
             InitializeComponent();
         }
         //================================
-        private bool RacineOk=false;
+        private bool RacineOk = false;
         int[] Arbre = new int[33];
         //================================
         private void button1_Click(object sender, EventArgs e)
         {
-            label1.Text = (Math.Pow(2,5) + 1).ToString(); //33           
-            for(int i=0; i<33;i++) //initialise le tableau
+            label1.Text = (Math.Pow(2, 5) + 1).ToString(); //33           
+            for (int i = 0; i < 33; i++) //initialise le tableau
             {
                 Arbre[i] = -1;
             }
@@ -34,36 +34,36 @@ namespace Arbres
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-          
+
         }
         void ActualiseListeNoeud()
-        {           
+        {
             listBox1.Items.Clear();
-            for (int i=0; i<33;i++)
+            for (int i = 0; i < 33; i++)
             {
-                if (Arbre[i]!=-1) {
+                if (Arbre[i] != -1) {
                     listBox1.Items.Add(Arbre[i]);
-                //    MessageBox.Show(Arbre[i].ToString());
+                    //    MessageBox.Show(Arbre[i].ToString());
                 }
             }
         }
 
         private void textBox1_Validating(object sender, CancelEventArgs e)
         {
-           
+
         }
         private void AfficheTablo()
         {
             listBox2.Items.Clear();
-          
+
             for (int i = 0; i < 33; i++)
             {
-                listBox2.Items.Add(Arbre[i].ToString()); 
+                listBox2.Items.Add(Arbre[i].ToString());
             }
         }
         int ValeurDuNoeud, noeudPere;
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {               }
+        { }
         private void listBox1_Click(object sender, EventArgs e)
         {
             tbChoixNoeud.Text = listBox1.SelectedItem.ToString();
@@ -89,20 +89,121 @@ namespace Arbres
             panel1.Visible = false;
         }
 
+       
+
         private void BtParcoursEnLargeur_Click(object sender, EventArgs e)
         {
-            int a, b;
-            textBox2.Text = "";
-            if (Arbre[0]!=-1) { textBox2.Text = Arbre[0].ToString() + " => "; }
-            for (int i=0;i<=5;i++)
+            bool fin = false;
+            bool NGE, NDE;
+            Pile.Add(0);
+            this.textBox2.Text = Arbre[0] + "\r\n";
+            int c = 1;
+            
+            do
             {
-                a = Arbre[2 * i + 1];
-                b= Arbre[2 * i + 2];
-                if (a!=-1) { textBox2.Text = textBox2.Text + a.ToString() + " => ";  }
-                if (b != -1) { textBox2.Text = textBox2.Text + b.ToString() + " => " ; }
-            }
+                int cm = 0;
+                int cpt = 0;
+                for (int i = 0; i <= c - 1; i++) //de 0 à longueur de pile  corresponde aux noeud pères
+                {
+                    fin = false;
+                    if (ExisteNG(Pile[i])) // ajoute à la pile le NG (rang du tableau)
+                    {
+                        Pile.Add(2*Pile[i]+1);
+                        this.textBox2.Text = this.textBox2.Text + ValeurNG.ToString() + " ";
+                        NGE = true;
+                        cpt++;
+                        affichePile();
+                        MessageBox.Show("Pile +");
+                    } else { NGE = false; }
+                    if (ExisteND(Pile[i])) // ajoute à la pile le ND
+                    {
+                        Pile.Add(2*Pile[i]+2);
+                        this.textBox2.Text = this.textBox2.Text + ValeurND.ToString() + " ";
+                        NDE = true;
+                       cpt++;
+                        affichePile();
+                        MessageBox.Show("Pile +");
+                    } else { NDE = false; }
+                    
+                    Pile.RemoveAt(0);  // vire le premier élément de la pile
+                    cm++;
+                    affichePile();
+                    MessageBox.Show("Pile -");
+                }
+                c = cpt;
+                this.textBox2.Text = this.textBox2.Text + "\r\n";
+                MessageBox.Show(" Nb Noeuds ajoutés "+c.ToString()+" Noeud supprimés : "+cm.ToString());
+                if ( (NGE=false) && (NDE=false)) { fin = true; } 
+               
+            } while (!fin);
+
+        }
+        private void affichePile ()
+        {
+            this.listBox1.Items.Clear();
+            this.listBox1.Visible = true;
+            /*  foreach (int i in Pile)
+              {
+                  this.listBox1.Items.Add(Pile[i]);
+              }*/
+            for (int i = 0;i<= Pile.Count-1; i++ )
+            { this.listBox1.Items.Add(Pile[i]); }
+
         }
 
+        int ValeurNG, ValeurND;
+
+        bool ExisteNG(int Ntab)
+        {   if (2 * Ntab + 1 >= 33) { return false; }
+            ValeurNG = Arbre[2 * Ntab + 1];
+            if (ValeurNG!= -1) return true; else { return false; ; };           
+        }
+        bool ExisteND(int Ntab)
+        {            
+            if (2 * Ntab + 2 >= 33) { return false; }
+            ValeurND = Arbre[2 * Ntab + 2];
+            if (ValeurND != -1) return true; else { return false; } ;
+        }
+        private void ExploreArbreBinaire(int N, int sens) // 0 descente 1 Montéee
+        {
+            int c;
+            affichePile();
+            this.label1.Text = "sens";
+            this.label2.Text = sens.ToString();
+            MessageBox.Show("Entrée de ExploreArbrebinaire");
+            Pile.Add(N);
+           // MessageBox.Show("E2");            
+            if (ExisteNG(N)&& sens==0) // descente et NG existe
+            {
+                textBox2.Text = textBox2.Text + Arbre[N].ToString() + "=> ";
+                ExploreArbreBinaire(2*N+1,0);               
+            }
+            if (!ExisteNG(N) && sens == 0)// descente et pas de Noeud gauche
+            {
+                c = Pile.Count - 1;
+                Pile.RemoveAt(c);                
+                ExploreArbreBinaire(N , 1);
+            }
+                if ((sens==1)&& ExisteND(N))  // Remontée et ND existe
+            {
+                 c = Pile.Count - 1;
+                Pile.RemoveAt(c);
+                textBox2.Text = textBox2.Text + Arbre[N].ToString() + "=> ";
+                 c = Pile.Count - 1;                
+                Pile.Add(N);
+                ExploreArbreBinaire(2 * N + 2,0);
+            }
+            if (!ExisteNG(N) && !ExisteND(N)) // aucun fils
+            {                                  
+                MessageBox.Show(N.ToString());                
+                c = Pile.Count - 1;
+                Pile.RemoveAt(c);// vire dernier element pile
+                 c = Pile.Count - 1; // recupère Valeur du noeud Sup
+                N = Pile[c];
+                ExploreArbreBinaire(N - 2, 1);
+            }
+           
+        }
         private void Explore(bool cote)
         {
             // Parcours de l'arbre en profondeur préfixé.
@@ -124,37 +225,37 @@ namespace Arbres
                     MessageBox.Show("passage dans boucle Explore"); 
                     pos = 2 * Nivo + 1;
                     a = Arbre[pos];
-                    if (a != -1 && Nivo <= 5 && exploreAgauche) //Fils G existe
+                    if (a != -1 && Nivo <= 5 && exploreAgauche) //Fils G existe et condition "explore à geuche" vraie
                     {
                         Pile.Add(pos); //Empile
                         textBox2.Text = textBox2.Text +a.ToString() + "=> ";
                         Nivo++;
-                         exploreAgauche = true;
-            }
-                    else
-                    {
+                         exploreAgauche = true; // renvoie continuer à explorer à gauche
+                    }                                     
                         pos = 2 * Nivo + 2;
                         a = Arbre[pos];
-                        if (a != -1 && Nivo <= 5) // Fils droit existe Mais pas fils gauche
+                        if (a != -1 && Nivo <= 5 && exploreAgauche) // Fils droit existe Mais pas fils gauche et condition "expolre à gauche faussse'
                         {
                             Pile.Add(pos);//Empile
                             textBox2.Text = textBox2.Text + a.ToString() + "=> ";
-                         exploreAgauche = false;
-                        Nivo++;
+                            exploreAgauche = false; // renvoie NE PAS continuer à explorer à gauche
+                if (pos==Arbre.Length) { fin = true; } // fin du tableau atteinte
+                            Nivo++;
                         }
-                        else
+                    if (Arbre[2*Nivo+1]==-1 && Arbre[2 * Nivo + 2] == -1)
                         {// Aucun fils
                             b = Pile.Count-1;
-                            if (b < 0 || Nivo > 5) { fin = true; } // condition de fin
+                            if (b < 0 || Nivo > 5) { fin = true; MessageBox.Show("condition de remontée"); } // condition de fin
                             // depile
                             Pile.RemoveAt(b);
                             exploreAgauche = false;
-                            Nivo=Nivo-2;
-                        }
+                            Nivo=Nivo-2;// renvoie NE PAS continuer à explorer à gauche                
                     }
-                Explore(exploreAgauche);                           
+            Explore(exploreAgauche);
+                                           
         }
 
+       // List<int> Pile2 = new List<int>();
         List<int> Pile = new List<int>();
         int Nivo = 0;
         int a = 0;
@@ -164,16 +265,18 @@ namespace Arbres
 
         private void btPrefixé_Click(object sender, EventArgs e)
         {
-            Pile.Add(0);
-            textBox2.Text = Arbre[0].ToString() + "=> ";
-            Explore(true);
+            //Pile.Add(0);           
+            // Explore(true);
+            ExploreArbreBinaire(0,0);
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 33; i++)
+        { 
+            for (int i = 0; i <=32; i++)
             {
-                Arbre[i]=i+100;
+                Arbre[i] = i+100 ;
+                
+                
                 AfficheTablo();
             }
         }
@@ -214,8 +317,7 @@ namespace Arbres
                     // cas ou les deux noeuds existent
                         else // les 2 fils existent
                         {
-                            panel1.Visible = true;
-                           
+                            panel1.Visible = true;                           
                         }
                     }
                     AfficheTablo();

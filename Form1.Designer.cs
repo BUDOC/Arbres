@@ -172,10 +172,10 @@ namespace Arbres
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(764, 169);
+            this.textBox2.Location = new System.Drawing.Point(682, 169);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(259, 276);
+            this.textBox2.Size = new System.Drawing.Size(404, 276);
             this.textBox2.TabIndex = 8;
             // 
             // BtParcoursEnLargeur
