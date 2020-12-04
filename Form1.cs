@@ -93,8 +93,7 @@ namespace Arbres
 
         private void BtParcoursEnLargeur_Click(object sender, EventArgs e)
         {
-            bool fin = false;
-            bool NGE, NDE;
+            bool fin = false;            
             Pile.Add(0);
             this.textBox2.Text = Arbre[0] + "\r\n";
             int c = 1;
@@ -103,38 +102,44 @@ namespace Arbres
             {
                 int cm = 0;
                 int cpt = 0;
-                for (int i = 0; i <= c - 1; i++) //de 0 à longueur de pile  corresponde aux noeud pères
-                {
+                int Memo;
+                for (int i = 0; i <= c-1 ; i++) //de 0 à longueur de pile  corresponde aux noeud pères
+                {                   
                     fin = false;
-                    if (ExisteNG(Pile[i])) // ajoute à la pile le NG (rang du tableau)
+                    if (ExisteNG(Pile[0])) // ajoute à la pile le NG (rang du tableau)
                     {
-                        Pile.Add(2*Pile[i]+1);
-                        this.textBox2.Text = this.textBox2.Text + ValeurNG.ToString() + " ";
-                        NGE = true;
+                        Pile.Add(2*Pile[0]+1);
+                        this.textBox2.Text = this.textBox2.Text + ValeurNG.ToString() + " ";                        
                         cpt++;
                         affichePile();
-                        MessageBox.Show("Pile +");
-                    } else { NGE = false; }
-                    if (ExisteND(Pile[i])) // ajoute à la pile le ND
+                        if (commentaires) { MessageBox.Show("Pile + : Ajout du noeud Gauche " + ValeurNG.ToString()); }
+                    } 
+                    if (ExisteND(Pile[0])) // ajoute à la pile le ND
                     {
-                        Pile.Add(2*Pile[i]+2);
-                        this.textBox2.Text = this.textBox2.Text + ValeurND.ToString() + " ";
-                        NDE = true;
+                        Pile.Add(2*Pile[0]+2);
+                        this.textBox2.Text = this.textBox2.Text + ValeurND.ToString() + " ";                        
                        cpt++;
                         affichePile();
-                        MessageBox.Show("Pile +");
-                    } else { NDE = false; }
-                    
+                        if (commentaires) { MessageBox.Show("Pile + : Ajout du noeud Droit " + ValeurND.ToString()); }
+                    } 
+                    Memo = Pile[0];
                     Pile.RemoveAt(0);  // vire le premier élément de la pile
                     cm++;
                     affichePile();
-                    MessageBox.Show("Pile -");
+                    if (commentaires) { MessageBox.Show("Pile - : Suppression du noeud de bas de pile : " + Memo.ToString()); }
                 }
-                c = cpt;
+                c = cpt; // indique au prochain tour de boucle le nombre de noeuds ajoutés donc de dépilages
                 this.textBox2.Text = this.textBox2.Text + "\r\n";
-                MessageBox.Show(" Nb Noeuds ajoutés "+c.ToString()+" Noeud supprimés : "+cm.ToString());
-                if ( (NGE=false) && (NDE=false)) { fin = true; } 
-               
+                if (commentaires)
+                { MessageBox.Show(" Nb Noeuds ajoutés = nb tours de boucle = " + c.ToString() + "    Noeuds supprimés = " + cm.ToString()); }
+                if (cpt==0)
+                {
+                    if (commentaires)
+                    {
+                        MessageBox.Show(" pas de fils => Arret de l'exploration");
+                    }
+                            fin = true;
+                }  // fin si pas de noeud ajouté            
             } while (!fin);
 
         }
@@ -154,15 +159,32 @@ namespace Arbres
         int ValeurNG, ValeurND;
 
         bool ExisteNG(int Ntab)
-        {   if (2 * Ntab + 1 >= 33) { return false; }
+        {   if ((2 * Ntab )+ 1 >= 33) { return false; }
             ValeurNG = Arbre[2 * Ntab + 1];
-            if (ValeurNG!= -1) return true; else { return false; ; };           
+            if (ValeurNG != -1) 
+            {
+                if (commentaires)
+                {
+                    MessageBox.Show("Le fils gauche de " + Ntab.ToString() + " est " + ValeurNG.ToString());
+                          
+                } return true;
+            } else 
+            { return false;  }          
         }
+
         bool ExisteND(int Ntab)
         {            
-            if (2 * Ntab + 2 >= 33) { return false; }
+            if ((2 * Ntab) + 2 >= 33) { return false; }
             ValeurND = Arbre[2 * Ntab + 2];
-            if (ValeurND != -1) return true; else { return false; } ;
+            if (ValeurND != -1) 
+            {
+                if (commentaires)
+                {
+                    MessageBox.Show("Le fils droit de " + Ntab.ToString() + " est " + ValeurND.ToString());
+                }
+                    return true;
+            }            
+            else { return false; } ;
         }
         private void ExploreArbreBinaire(int N, int sens) // 0 descente 1 Montéee
         {
@@ -269,14 +291,17 @@ namespace Arbres
             // Explore(true);
             ExploreArbreBinaire(0,0);
         }
+        private bool commentaires;
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked) { commentaires = true; } else { commentaires = false; }
+        }
 
         private void button3_Click(object sender, EventArgs e)
         { 
             for (int i = 0; i <=32; i++)
             {
-                Arbre[i] = i+100 ;
-                
-                
+                Arbre[i] = i+100 ;                                
                 AfficheTablo();
             }
         }
