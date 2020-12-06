@@ -20,13 +20,17 @@ namespace Arbres
         private bool RacineOk = false;
         int[] Arbre = new int[33];
         //================================
-        private void button1_Click(object sender, EventArgs e)
+        private void InitTablo()
         {
-            label1.Text = (Math.Pow(2, 5) + 1).ToString(); //33           
             for (int i = 0; i < 33; i++) //initialise le tableau
             {
                 Arbre[i] = -1;
             }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            label1.Text = (Math.Pow(2, 5) + 1).ToString(); //33           
+            InitTablo();
             textBox1.Visible = true;
             label2.Text = "Racine? (entier)";
             this.button1.Visible = false;
@@ -157,19 +161,18 @@ namespace Arbres
 
         }
 
-        int ValeurNG, ValeurND,NG,ND;
+        int ValeurNG, ValeurND, NG, ND;
 
         bool ExisteNG(int Ntab)
         {
-            NG= 2 * Ntab +1;
-            if ((2 * Ntab) + 1 >= 33) { return false; }
+            NG = 2 * Ntab + 1;
+            if (NG > 30) { return false; }
             ValeurNG = Arbre[2 * Ntab + 1];
             if (ValeurNG != -1)
             {
                 if (commentaires)
                 {
-                    MessageBox.Show("Le fils gauche de " + Ntab.ToString() + " est " + ValeurNG.ToString());
-
+                  //  MessageBox.Show("Le fils gauche de " + Ntab.ToString() + " est " + ValeurNG.ToString());
                 }
                 return true;
             }
@@ -179,39 +182,132 @@ namespace Arbres
 
         bool ExisteND(int Ntab)
         {
-            if ((2 * Ntab) + 2 >= 33) { return false; }
+            ND = (2 * Ntab) + 2;
+            if (ND > 30) { return false; }
             ValeurND = Arbre[2 * Ntab + 2];
             if (ValeurND != -1)
             {
                 if (commentaires)
                 {
-                    MessageBox.Show("Le fils droit de " + Ntab.ToString() + " est " + ValeurND.ToString());
+                  //  MessageBox.Show("Le fils droit de " + Ntab.ToString() + " est " + ValeurND.ToString());
                 }
                 return true;
             }
             else { return false; };
         }
-        private void ExploreArbreBinaire(int N)// parcours en profondeur
-        {    if (commentaires)
+        private void ExploreArbreBinaire(int N)// parcours en profondeur Recursif
+        {
+            if (commentaires)
             {
                 MessageBox.Show("Expore arbre binaire noeud " + N.ToString());
             }
-            if (ExisteNG(N) )
-                {
-                textBox2.Text = textBox2.Text + " => " + ValeurNG.ToString();
-                ExploreArbreBinaire(ValeurNG);
-                }
-            else
+            // condition d'arret
+            if (!ExisteND(N) && !ExisteNG(N)) { return; }
+            if (ExisteNG(N))
             {
-                if (ExisteND(N))
-                {
-                    textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
-                    ExploreArbreBinaire(ValeurND);
-                }
+                //   textBox2.Text = textBox2.Text + " => " + ValeurNG.ToString();
+                //  ExploreArbreBinaire(NG);
+                String toto = ValeurNG.ToString();
+
+                ExploreArbreBinaire(NG);
+                textBox2.Text = textBox2.Text + " => " + toto;// ValeurNG.ToString();
+                
+            }
+            if (ExisteND(N))
+            {
+                /*  textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
+                  ExploreArbreBinaire(ND);
+                */
+                String toto = ValeurND.ToString();
+
+                ExploreArbreBinaire(ND);
+                textBox2.Text = textBox2.Text + " => " + toto;
             }
         }
 
-   
+        private void DepileHaut()
+        {
+            int plgp;
+            plgp = Pile.Count - 1;
+            if (plgp < 0)
+            {
+                MessageBox.Show("Dépilage par le bas impossible : Pile vide"); return;
+            }
+            Pile.RemoveAt(plgp);
+            affichePile();
+        }
+        private void PP2(int N)
+        {
+            int lgp;
+            Pile.Clear();
+            textBox2.Clear();
+            Pile.Add(N); // Ajoute Racine
+            textBox2.Text = Arbre[N].ToString() ;
+            affichePile();
+
+            do
+            {
+                lgp = Pile.Count - 1;
+                N = Pile[lgp];
+                // les 3 cas ci-dessous s'excluent mutuellement
+                if (ExisteNG(N))  // fils à gauche existe
+                {
+                    textBox2.Text = textBox2.Text + " => " + ValeurNG.ToString();
+                    Pile.Add(NG); // NG en haut de pile
+                    affichePile();
+                    if (commentaires) { MessageBox.Show("NG exite donc on l'Ajoute  à la pile " + ValeurNG.ToString()); }
+                }
+                if (!ExisteNG(N) && ExisteND(N))
+                {
+                    DepileHaut();
+                    Pile.Add(ND);
+                    textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
+                    affichePile();
+                    if (commentaires) { MessageBox.Show("Pas de NG et un ND => on dépile et on Ajoute ce ND à la pile " + ValeurND.ToString()); }
+                }
+
+                if (!ExisteNG(N) && !ExisteND(N))
+                {
+                    if (commentaires)
+                    {
+                        MessageBox.Show("Pas de NG ni de ND (feuille)");
+                    }
+
+                     DepileHaut();
+                    lgp = Pile.Count - 1;
+                    if (lgp >= 0) { N = Pile[lgp]; } else { MessageBox.Show("Exploration terminée"); break; }
+                   
+                    N = Pile[lgp];
+                    
+                        if (ExisteND(N))  // Remplacer Père par fils droit si le père possède un fils droit
+                        {
+                            DepileHaut();
+                            Pile.Add(ND);
+                            textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
+
+                            if (commentaires)
+                            {
+                                MessageBox.Show("Comme le père possédait un fils droit on remplace le père par ce fils droit");
+                            }
+                        }
+
+                        affichePile();
+                        if (commentaires)
+                        {
+                            MessageBox.Show("Remplacer Père par fils droit si noeud droit sinon dépiler haut 2 fois");
+                        }
+                  
+                }
+                lgp = Pile.Count - 1;
+                if (lgp >= 0) { N = Pile[lgp]; } else { MessageBox.Show("Exploration terminée"); }
+            } while (lgp >= 0);
+        }
+
+        private void Infixe(int N)
+        {
+
+        }
+
         List<int> Pile = new List<int>();
 
 
@@ -221,6 +317,34 @@ namespace Arbres
             textBox2.Clear();
             ExploreArbreBinaire(0); // 0 racine , 0 sens (descente)
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            PP2(0);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.button3.PerformClick();
+            this.button3.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.treeView1.Nodes.Add(tbNode.Text);
+           
+        }
+
+        private void treeView1_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.tbNode.Text = this.treeView1.SelectedNode.Text;
+        }
+
         private bool commentaires;
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -229,14 +353,15 @@ namespace Arbres
 
         private void button3_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i <= 32; i++)
+            InitTablo();
+            for (int i = 0; i <= 30; i++)
             {
                 Arbre[i] = i + 200;
 
             }
-            /*   Arbre[3] = -1;
-               Arbre[2] = -1;
-               Arbre[4] = -1;*/
+          //  Arbre[1] = -1;
+           // Arbre[5] = -1;
+          //  Arbre[6] = -1;
             AfficheTablo();
             affichePile();
 

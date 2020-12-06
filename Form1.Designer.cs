@@ -47,6 +47,11 @@ namespace Arbres
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tbNode = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -173,7 +178,7 @@ namespace Arbres
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(682, 169);
+            this.textBox2.Location = new System.Drawing.Point(696, 223);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(404, 276);
@@ -191,26 +196,27 @@ namespace Arbres
             // 
             // btPrefixé
             // 
-            this.btPrefixé.Location = new System.Drawing.Point(764, 55);
+            this.btPrefixé.Location = new System.Drawing.Point(696, 55);
             this.btPrefixé.Name = "btPrefixé";
-            this.btPrefixé.Size = new System.Drawing.Size(259, 34);
+            this.btPrefixé.Size = new System.Drawing.Size(327, 34);
             this.btPrefixé.TabIndex = 10;
-            this.btPrefixé.Text = "Parcours en profondeur préfixé";
+            this.btPrefixé.Text = "Parcours en profondeur préfixé Récursif";
             this.btPrefixé.UseVisualStyleBackColor = true;
             this.btPrefixé.Click += new System.EventHandler(this.btPrefixé_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(696, 116);
+            this.button2.Location = new System.Drawing.Point(220, 528);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 11;
-            this.button2.Text = "button2";
+            this.button2.Text = "+";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(764, 452);
+            this.button3.Location = new System.Drawing.Point(764, 505);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(259, 39);
             this.button3.TabIndex = 12;
@@ -221,7 +227,7 @@ namespace Arbres
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(853, 117);
+            this.checkBox1.Location = new System.Drawing.Point(927, 196);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(146, 21);
             this.checkBox1.TabIndex = 13;
@@ -229,11 +235,60 @@ namespace Arbres
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(696, 96);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(327, 34);
+            this.button4.TabIndex = 14;
+            this.button4.Text = "Parcours en profondeur préfixé avec pile";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(38, 505);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(121, 97);
+            this.treeView1.TabIndex = 15;
+            this.treeView1.Click += new System.EventHandler(this.treeView1_Click);
+            // 
+            // tbNode
+            // 
+            this.tbNode.Location = new System.Drawing.Point(211, 558);
+            this.tbNode.Name = "tbNode";
+            this.tbNode.Size = new System.Drawing.Size(100, 22);
+            this.tbNode.TabIndex = 16;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(0, 0);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(220, 587);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 18;
+            this.button6.Text = "voir";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 556);
+            this.ClientSize = new System.Drawing.Size(1161, 653);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.tbNode);
+            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -250,6 +305,7 @@ namespace Arbres
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -277,6 +333,11 @@ namespace Arbres
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TextBox tbNode;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }
 
