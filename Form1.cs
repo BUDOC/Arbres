@@ -19,17 +19,19 @@ namespace Arbres
         //================================
         private bool RacineOk = false;
         int[] Arbre = new int[33];
+        int TypeDeParcours;
+
         //================================
         private void InitTablo()
         {
-            for (int i = 0; i < 33; i++) //initialise le tableau
+            for (int i = 0; i < 30; i++) //initialise le tableau
             {
                 Arbre[i] = -1;
             }
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            label1.Text = (Math.Pow(2, 5) + 1).ToString(); //33           
+            label1.Text = (Math.Pow(2, 6)-2).ToString(); //33           
             InitTablo();
             textBox1.Visible = true;
             label2.Text = "Racine? (entier)";
@@ -205,23 +207,33 @@ namespace Arbres
             if (!ExisteND(N) && !ExisteNG(N)) { return; }
             if (ExisteNG(N))
             {
-                //   textBox2.Text = textBox2.Text + " => " + ValeurNG.ToString();
-                //  ExploreArbreBinaire(NG);
-                String toto = ValeurNG.ToString();
+                if (TypeDeParcours==0)//préfixé
+                {
+                       textBox2.Text = textBox2.Text + " => " + ValeurNG.ToString();
+                 ExploreArbreBinaire(NG);
+                }
 
-                ExploreArbreBinaire(NG);
-                textBox2.Text = textBox2.Text + " => " + toto;// ValeurNG.ToString();
-                
+                String toto = ValeurNG.ToString();
+                if (TypeDeParcours == 1)// suffixé
+                {
+                    ExploreArbreBinaire(NG);
+                    textBox2.Text = textBox2.Text + " => " + toto;// ValeurNG.ToString();
+                }
             }
             if (ExisteND(N))
             {
-                /*  textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
-                  ExploreArbreBinaire(ND);
-                */
-                String toto = ValeurND.ToString();
-
-                ExploreArbreBinaire(ND);
-                textBox2.Text = textBox2.Text + " => " + toto;
+                if (TypeDeParcours == 0) //préfixé
+                {
+                     textBox2.Text = textBox2.Text + " => " + ValeurND.ToString();
+                      ExploreArbreBinaire(ND);
+                   
+                }
+                    String toto = ValeurND.ToString();
+                if (TypeDeParcours == 1)// suffixé
+                {
+                    ExploreArbreBinaire(ND);
+                    textBox2.Text = textBox2.Text + " => " + toto;
+                }
             }
         }
 
@@ -315,7 +327,8 @@ namespace Arbres
         private void btPrefixé_Click(object sender, EventArgs e)
         {
             textBox2.Clear();
-            ExploreArbreBinaire(0); // 0 racine , 0 sens (descente)
+            TypeDeParcours = 0;
+            ExploreArbreBinaire(6);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -343,6 +356,13 @@ namespace Arbres
         private void button6_Click(object sender, EventArgs e)
         {
             this.tbNode.Text = this.treeView1.SelectedNode.Text;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            textBox2.Clear();
+            TypeDeParcours = 1;
+            ExploreArbreBinaire(0);
         }
 
         private bool commentaires;
